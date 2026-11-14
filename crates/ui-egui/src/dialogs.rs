@@ -348,9 +348,16 @@ fn about(ctx: &egui::Context, open: &mut bool) {
                     ui.label(crate::tf!("Version {version}", version = env!("CARGO_PKG_VERSION")));
                     ui.label(crate::tl!("Computer-aided design and drafting: an open-source, clean-room CAD application written in pure Rust."));
                     ui.add_space(6.0);
-                    ui.label(RichText::new(crate::tl!("One of the Crafting Apps by the ArtCraft team and community.")).color(t.text_dim));
-                    ui.hyperlink_to("getartcraft.com/apps/cadcraft", "https://getartcraft.com/apps/cadcraft");
-                    ui.hyperlink_to(crate::tl!("Join us on Discord"), "https://discord.gg/artcraft");
+                    if crate::zenda::ON {
+                        // Zenda's build: no ArtCraft marks or community links (docs/brand/LICENSE-brand.txt).
+                        ui.label(RichText::new(crate::tl!("Zenda's build for Work.")).color(t.text_dim));
+                        ui.label(RichText::new(crate::tl!("Based on CADCraft, by the ArtCraft team.")).color(t.text_dim));
+                        ui.hyperlink_to(crate::tl!("Source and modifications"), "https://github.com/Zenda-Solutions/cadcraft");
+                    } else {
+                        ui.label(RichText::new(crate::tl!("One of the Crafting Apps by the ArtCraft team and community.")).color(t.text_dim));
+                        ui.hyperlink_to("getartcraft.com/apps/cadcraft", "https://getartcraft.com/apps/cadcraft");
+                        ui.hyperlink_to(crate::tl!("Join us on Discord"), "https://discord.gg/artcraft");
+                    }
                     ui.add_space(6.0);
                     ui.label(RichText::new(crate::tl!("MIT OR Apache-2.0. Not affiliated with Autodesk, Inc.")).small().color(t.text_faint));
                 }

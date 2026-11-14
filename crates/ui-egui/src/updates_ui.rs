@@ -30,18 +30,26 @@ impl Default for Runtime {
 impl CadApp {
     /// Turn on the startup update check (the desktop host does; tests and the web build do not).
     pub fn enable_update_check(&mut self) {
-        self.updates_rt.enabled = true;
+        // Zenda's build is updated by Work, never by upstream's update service.
+        self.updates_rt.enabled = !crate::zenda::ON;
     }
 }
 
 /// Help ▸ Check for Updates…: check now, and show the result when there is nothing newer.
 pub fn check_now(app: &mut CadApp) {
+    if crate::zenda::ON {
+        app.session.echo(crate::tl!("Work keeps this app up to date.").to_string());
+        return;
+    }
     app.updates_rt.check_requested = true;
     app.updates_rt.result_echoed = false;
 }
 
 /// Start the checks and collect the answers.
 pub fn tick(app: &mut CadApp, ctx: &egui::Context) {
+    if crate::zenda::ON {
+        return;
+    }
     let rt = &mut app.updates_rt;
     if std::mem::take(&mut rt.check_requested) {
         rt.updater.check_now(ctx);
