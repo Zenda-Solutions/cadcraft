@@ -82,7 +82,16 @@ pub fn title_and_toolbar(app: &mut CadApp, ui: &mut egui::Ui) {
             ui.painter().galley(pos2(x, r.top() + (title_h - galley.size().y) / 2.0), galley, t.text_dim);
         }
         if tb_h > 0.0 {
-            let row = Rect::from_min_size(pos2(r.left(), r.top() + title_h), vec2(r.width(), tb_h));
+            let mut row = Rect::from_min_size(pos2(r.left(), r.top() + title_h), vec2(r.width(), tb_h));
+            if crate::zenda::ON {
+                // Work's Theo button keeps the right end; the commands fit in what is left.
+                let theo = Rect::from_min_size(
+                    pos2(row.right() - 12.0 - crate::zenda::BUTTON_WIDTH, row.center().y - 12.0),
+                    vec2(crate::zenda::BUTTON_WIDTH, 24.0),
+                );
+                crate::zenda::toolbar_theo(app, ui, theo);
+                row.max.x = theo.left() - 6.0;
+            }
             let mut x = r.left() + if app.integrated_titlebar { 120.0 } else { 12.0 };
             let size = 26.0;
             let mut clicked = None;
