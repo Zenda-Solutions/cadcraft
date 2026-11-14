@@ -69,6 +69,7 @@ pub mod theme;
 pub mod updates_ui;
 pub mod viewcube;
 pub mod vpscale;
+pub mod zenda;
 
 pub mod exchange;
 
@@ -275,6 +276,8 @@ struct PendingPick {
 }
 
 pub struct CadApp {
+    /// What the person asked of Work (Zenda build; see [`zenda`]).
+    pub zenda: zenda::Outbox,
     pub system_languages: Vec<String>,
     /// Whether the operating system shows animations, as the host reads it; `None` when the OS
     /// states nothing or the host cannot ask ([`animation`]).
@@ -376,6 +379,7 @@ impl CadApp {
     /// Construct `CadApp` from a session and services with default UI state, options, canvas and command line; no control channel, capture geometry or pending shots are installed.
     pub fn new(session: Session, services: Services) -> Self {
         CadApp {
+            zenda: zenda::Outbox::default(),
             system_languages: Vec::new(),
             system_animations: None,
             system_cursor_default: false,
@@ -602,6 +606,9 @@ impl CadApp {
 
     /// Start a command as if typed (interactive when it has prompts).
     pub fn start(&mut self, name: &str) {
+        if zenda::intercept(self, name) {
+            return;
+        }
         if menus::run_ui_command(self, name, &Value::Null).is_some() {
             return;
         }

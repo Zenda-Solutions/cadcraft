@@ -9,6 +9,10 @@ rust-version = "1.95"
 [lints]
 workspace = true
 
+[features]
+default = []
+zenda = []
+
 [dependencies]
 craft-ui = { workspace = true }
 cadcraft-geom = { workspace = true }

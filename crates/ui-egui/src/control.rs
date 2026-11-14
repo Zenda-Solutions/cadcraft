@@ -549,6 +549,7 @@ pub fn handle(app: &mut CadApp, ctx: &egui::Context, req: &ControlRequest) -> Ou
             ctx.send_viewport_cmd(egui::ViewportCommand::Close);
             ok(Value::Null)
         }
+        "work.events" if crate::zenda::ON => ok(json!({"events": app.zenda.drain()})),
         "control.methods" => ok(methods_json()),
         "ping" => ok(json!("pong")),
         other => err(format!("unknown method `{other}`; `control.methods` lists them (docs/control-protocol.md)")),
