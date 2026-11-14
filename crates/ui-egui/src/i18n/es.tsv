@@ -1270,3 +1270,173 @@
 	Ctrl+Enter to apply	Ctrl+Enter to apply
 	Edit Text	Edit Text
 	The drawing changed. Close the window and open it again.	El dibujo cambió. Cierre la ventana y ábrala de nuevo.
+# Zenda build for Work (MIT OR Apache-2.0).
+	Ask Theo for help	Pedile ayuda a Theo
+	Ask Theo about what is on screen	Preguntale a Theo por lo que ves en pantalla
+	Zenda's build for Work.	La versión de Zenda para Work.
+	Based on CADCraft, by the ArtCraft team.	Basada en CADCraft, del equipo de ArtCraft.
+	Source and modifications	Código y modificaciones
+	Work keeps this app up to date.	Work mantiene esta app actualizada.
+# Zenda: strings missing from the Spanish catalog at v0.20.1 (MIT OR Apache-2.0).
+	A shortcut you give wins over CADCraft's own. Changes apply at once and are kept for next time.	Un atajo que asignes gana sobre el de CADCraft. Los cambios se aplican al instante y se guardan para la próxima vez.
+	Add: Pick points	Agregar: designar puntos
+	Add: Select objects	Agregar: seleccionar objetos
+	Add…	Agregar…
+	Alias	Alias
+	Alias file: {file}	Archivo de alias: {file}
+	Aliases are saved in your CADCraft profile and survive restarts.	Los alias se guardan en tu perfil de CADCraft y se mantienen al reiniciar.
+	Align Multileaders	Alinear directrices múltiples
+	Analyze Usage	Analizar uso
+	Associative	Asociativo
+	Back to CADCraft's shortcut	Volver al atajo de CADCraft
+	Block to create or edit	Bloque para crear o editar
+	Bottom left	Abajo a la izquierda
+	Bottom right	Abajo a la derecha
+	Boundaries	Contornos
+	Boundaries picked: {n}	Contornos designados: {n}
+	Break-line Symbol	Símbolo de línea de corte
+	Centered	Centrado
+	Change	Cambiar
+	Change Properties	Cambiar propiedades
+	Choose the command the alias starts.	Elige el comando que inicia el alias.
+	Clear Recent Files	Borrar archivos recientes
+	Click the ruler to add a tab stop, right-click to remove one	Haz clic en la regla para agregar una tabulación y clic derecho para quitarla
+	Click to set new origin	Haz clic para fijar el nuevo origen
+	Clip Xref	Delimitar refX
+	Close Block Editor	Cerrar editor de bloques
+	Collect	Reunir
+	Collect Multileaders	Reunir directrices múltiples
+	Color 1	Color 1
+	Color 2	Color 2
+	Command	Comando
+	Command Mode	Modo comando
+	Convert Text to Mtext	Convertir texto en texto de líneas múltiples
+	Create separate hatches	Crear sombreados independientes
+	Crossing selection color:	Color de selección por captura:
+	Curved	Curvo
+	Customize	Personalizar
+	DView	Vista dinámica
+	Default Mode	Modo por defecto
+	Default to boundary extents	Usar la extensión del contorno por defecto
+	Define each corner of the selection window with a separate click.	Define cada esquina de la ventana de selección con un clic aparte.
+	Discard	Descartar
+	Drag Dynamic Grip	Arrastrar pinzamiento dinámico
+	Dynamic Block Data	Datos de bloque dinámico
+	Dynamic Block Grips	Pinzamientos de bloque dinámico
+	Dynamic Block Reference	Referencia de bloque dinámico
+	ENTER	INTRO
+	Edit Block Definition	Editar definición de bloque
+	Edit Command Aliases (PGP)...	Editar alias de comandos (PGP)...
+	Edit Mode	Modo edición
+	Edit Multileader	Editar directriz múltiple
+	Edit…	Editar…
+	Evaluate LISP	Evaluar LISP
+	Exclude:	Excluir:
+	Explode Attributes to Text	Descomponer atributos en texto
+	Express Tools	Herramientas Express
+	Font	Fuente
+	Grips	Pinzamientos
+	Groups	Grupos
+	Hatch Pick	Designar sombreado
+	Hatch and Gradient	Sombreado y degradado
+	Hatch origin	Origen del sombreado
+	Hatches	Sombreados
+	Hemispherical	Hemisférico
+	Ignore	Ignorar
+	Imperial (inches)	Imperial (pulgadas)
+	Implied Loops	Lazos implícitos
+	Import and replace	Importar y reemplazar
+	Import: there is no file dialog here; run ALIASEDIT with the file's contents using its text parameter.	Importar: aquí no hay diálogo de archivos; ejecuta ALIASEDIT con el contenido del archivo en su parámetro text.
+	Importing a file replaces your {n} aliases, and any changes not applied yet.	Importar un archivo reemplaza tus {n} alias y los cambios que todavía no aplicaste.
+	Import…	Importar…
+	Indicate selection area	Indicar área de selección
+	Interface scale	Escala de la interfaz
+	Inverted	Invertido
+	Island	Isla
+	Island detection	Detección de islas
+	Italic	Cursiva
+	Justify	Justificar
+	Keep my aliases	Conservar mis alias
+	Keyboard Shortcuts	Atajos de teclado
+	Keyboard Shortcuts...	Atajos de teclado...
+	Load Application...	Cargar aplicación...
+	Longer click duration:	Duración del clic largo:
+	Metric (millimetres)	Métrico (milímetros)
+	More than {n} aliases.	Más de {n} alias.
+	Move/Copy/Rotate	Desplazar/Copiar/Girar
+	Multiline text	Texto de líneas múltiples
+	Multiple Insert	Inserción múltiple
+	Needs Ctrl, Alt or a function key	Necesita Ctrl, Alt o una tecla de función
+	New and the first drawing at startup use these units unless a default template is set (QNEWTEMPLATE).	Nuevo y el primer dibujo al iniciar usan estas unidades salvo que haya una plantilla por defecto (QNEWTEMPLATE).
+	New block	Bloque nuevo
+	No alias file loaded. REINIT replaces these aliases with a file's.	No hay un archivo de alias cargado. REINIT reemplaza estos alias por los de un archivo.
+	No objects selected and no command running:	Sin objetos seleccionados ni comandos en curso:
+	Object grouping	Agrupación de objetos
+	Object selection limit for display of grips	Límite de objetos seleccionados para mostrar pinzamientos
+	Objects on locked layers	Objetos en capas bloqueadas
+	Objects selected and no command running:	Objetos seleccionados sin comandos en curso:
+	Open Recent	Abrir reciente
+	Open in Block Editor	Abrir en el editor de bloques
+	Origin: {x}, {y}	Origen: {x}, {y}
+	Outer	Exterior
+	Overline	Suprarrayado
+	Press the keys	Presiona las teclas
+	Preview	Vista previa
+	Raster Image Reference...	Referencia de imagen ráster...
+	Raster Images	Imágenes ráster
+	Repeat last command	Repetir el último comando
+	Replaces the shortcut of {commands}	Reemplaza el atajo de {commands}
+	Right-Click Customization	Personalización del clic derecho
+	Right-Click Customization...	Personalización del clic derecho...
+	Run ALIASEDIT with the file's contents using its text parameter.	Ejecuta ALIASEDIT con el contenido del archivo en su parámetro text.
+	Run Script...	Ejecutar guion...
+	Save Block	Guardar bloque
+	Save Block As	Guardar bloque como
+	Save Layout as Template	Guardar presentación como plantilla
+	Save alias	Guardar alias
+	Save changes to block "{name}"?	¿Guardar los cambios del bloque "{name}"?
+	Select boundaries to remove	Selecciona los contornos que quieres quitar
+	Select using two clicks only	Seleccionar solo con dos clics
+	Selection Area Effect	Efecto del área de selección
+	Selection Preview Filter	Filtro de vista previa de selección
+	Selection area opacity:	Opacidad del área de selección:
+	Selection effect color	Color del efecto de selección
+	Selection modes	Modos de selección
+	Selection preview	Vista previa de selección
+	Set Dynamic Property	Fijar propiedad dinámica
+	Shape	Forma
+	Sheet Books to PDF...	Libros de hojas a PDF...
+	Shortcut Menu	Menú contextual
+	Shortcut Menu: always enabled	Menú contextual: siempre activo
+	Shortcut Menu: enabled when command options are present	Menú contextual: activo cuando el comando tiene opciones
+	Show grips	Mostrar pinzamientos
+	Specified origin	Origen especificado
+	Spherical	Esférico
+	Tables	Tablas
+	Text color	Color del texto
+	Top left	Arriba a la izquierda
+	Top right	Arriba a la derecha
+	Turn on time-sensitive right-click	Activar clic derecho según duración
+	Turned off, a right-click while a command runs does what Right-Click Customization sets for Command mode.	Si está apagado, un clic derecho durante un comando hace lo que la personalización del clic derecho fije para el modo comando.
+	Type an alias name.	Escribe un nombre de alias.
+	Underline	Subrayado
+	Units	Unidades
+	Units of new drawings	Unidades de los dibujos nuevos
+	Unsaved changes	Cambios sin guardar
+	Use current origin	Usar el origen actual
+	Visual Effect Settings	Configuración de efectos visuales
+	Visual Effect Settings...	Configuración de efectos visuales...
+	When a command is active	Con un comando activo
+	When no command is active	Sin un comando activo
+	While a command runs, a quick click is Enter and a longer click opens the shortcut menu.	Durante un comando, un clic rápido es Intro y un clic largo abre el menú contextual.
+	While a command runs:	Durante un comando:
+	Window selection color:	Color de selección por ventana:
+	Xref	RefX
+	Xref Clip Frame	Marco de delimitación de refX
+	Xrefs	RefX
+	built-in	integrado
+	milliseconds	milisegundos
+	overrides built-in	reemplaza al integrado
+	{alias} is already defined; select it and use Edit.	{alias} ya está definido; selecciónalo y usa Editar.
+	{command} is an unknown command.	{command} no es un comando conocido.
+	{n} more warnings; see the command line.	{n} advertencias más; mira la línea de comandos.
