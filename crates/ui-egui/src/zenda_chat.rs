@@ -81,7 +81,7 @@ impl Host for CadHost<'_> {
         (name == DO).then(|| args["command"].as_str().and_then(|id| POLICY.question(&id.to_ascii_lowercase()))).flatten()
     }
 
-    fn target(&self, _name: &str, _args: &Value) -> Option<egui::Rect> {
+    fn target(&mut self, _name: &str, _args: &Value) -> Option<egui::Rect> {
         None
     }
 }
