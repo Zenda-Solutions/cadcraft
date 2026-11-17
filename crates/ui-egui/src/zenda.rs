@@ -81,6 +81,11 @@ pub fn toolbar_theo(app: &mut crate::CadApp, ui: &mut egui::Ui, rect: egui::Rect
     let hint = crate::tl!("Ask Theo about what is on screen");
     let pressed = ui.scope_builder(egui::UiBuilder::new().max_rect(rect), |ui| theo_button(ui, label, hint).clicked()).inner;
     if pressed {
+        // With Work's chat flag on, the chat opens here instead (zenda_chat.rs).
+        #[cfg(feature = "zenda")]
+        if crate::zenda_chat::toggle(app) {
+            return;
+        }
         app.zenda.push("work.theo", theo_context(app));
     }
 }

@@ -70,6 +70,8 @@ pub mod updates_ui;
 pub mod viewcube;
 pub mod vpscale;
 pub mod zenda;
+#[cfg(feature = "zenda")]
+pub mod zenda_chat;
 
 pub mod exchange;
 
@@ -278,6 +280,9 @@ struct PendingPick {
 pub struct CadApp {
     /// What the person asked of Work (Zenda build; see [`zenda`]).
     pub zenda: zenda::Outbox,
+    /// Theo's chat inside CAD: `None` until Work sends a chat key (its flag is on).
+    #[cfg(feature = "zenda")]
+    pub theo_chat: Option<zenda_theo::panel::Chat>,
     pub system_languages: Vec<String>,
     /// Whether the operating system shows animations, as the host reads it; `None` when the OS
     /// states nothing or the host cannot ask ([`animation`]).
@@ -380,6 +385,8 @@ impl CadApp {
     pub fn new(session: Session, services: Services) -> Self {
         CadApp {
             zenda: zenda::Outbox::default(),
+            #[cfg(feature = "zenda")]
+            theo_chat: None,
             system_languages: Vec::new(),
             system_animations: None,
             system_cursor_default: false,
@@ -874,6 +881,8 @@ impl CadApp {
     /// pass index is zero. `current_pass_index() == 0` is therefore the frame guard: true on the
     /// first pass and every hidden tick, false on later passes.
     pub fn logic(&mut self, ctx: &egui::Context) {
+        #[cfg(feature = "zenda")]
+        crate::zenda_chat::tick(self, ctx);
         // Consume-based queues: each item is handled once, whichever callback delivers it. A
         // reply arriving during a later pass is never starved until the next frame.
         self.drain_control(ctx);
@@ -1102,6 +1111,8 @@ impl CadApp {
         if has_doc && !self.ui.show_toolsets {
             palettes::toolsets_strip(self, ui);
         }
+        #[cfg(feature = "zenda")]
+        crate::zenda_chat::show(self, ui);
         egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.canvas)).show(ui, |ui| {
             if has_doc {
                 docking::show(self, ui);
