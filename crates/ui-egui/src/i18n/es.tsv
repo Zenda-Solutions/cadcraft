@@ -1440,3 +1440,8 @@
 	{alias} is already defined; select it and use Edit.	{alias} ya está definido; selecciónalo y usa Editar.
 	{command} is an unknown command.	{command} no es un comando conocido.
 	{n} more warnings; see the command line.	{n} advertencias más; mira la línea de comandos.
+	Drawing Recovery	Recuperación de dibujos
+	CADCraft did not close normally. These drawings were autosaved:	CADCraft no se cerró correctamente. Estos dibujos se guardaron automáticamente:
+	Opened drawings have no file name: save them to keep them.	Los dibujos que abras no tienen nombre de archivo: guárdalos para conservarlos.
+	Later	Más tarde
+	Keep the files and ask again next time	Conservar los archivos y volver a preguntar la próxima vez
