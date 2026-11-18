@@ -100,7 +100,14 @@ impl Host for CadHost<'_> {
             }
             DO => {
                 let (id, params) = commands::command_of(args, &POLICY)?;
-                call(self.app, &self.ctx, "engine.execute", json!({"command": id, "params": params}))
+                if is_dimension(id) {
+                    ensure_dim_scale(self.app, &self.ctx);
+                }
+                let done = call(self.app, &self.ctx, "engine.execute", json!({"command": id, "params": params}))?;
+                if !is_view(id) {
+                    self.app.theo_drew = true;
+                }
+                Ok(done)
             }
             other => Err(format!("Theo no puede usar «{other}» en CAD.")),
         }
@@ -112,6 +119,45 @@ impl Host for CadHost<'_> {
 
     fn target(&mut self, _name: &str, _args: &Value) -> Option<egui::Rect> {
         None
+    }
+}
+
+/// A command that places a dimension (not one that edits dimension styles).
+fn is_dimension(id: &str) -> bool {
+    let id = id.to_ascii_lowercase();
+    id.starts_with("dim") && !id.starts_with("dimstyle")
+}
+
+/// A command that only moves the view: it does not count as drawing.
+fn is_view(id: &str) -> bool {
+    let id = id.to_ascii_lowercase();
+    id.starts_with("zoom") || id.starts_with("pan") || id.starts_with("view") || id.starts_with("orbit")
+}
+
+/// The dimension scale a drawing of this size needs so its dimensions read on screen: the standard style is
+/// sized for inches (0.18 text), invisible on a 4000 mm room. `None` when the drawing is small enough.
+fn dim_scale_for(span: f64) -> Option<f64> {
+    (span > 200.0).then(|| (span / 20.0).round().max(1.0))
+}
+
+/// Before Theo's first dimension in a big drawing, scales the current dimension style when it is still at 1,
+/// so the text and arrows show. A style the person already scaled is left alone.
+fn ensure_dim_scale(app: &mut CadApp, ctx: &egui::Context) {
+    let Ok(drawing) = call(app, ctx, "drawing.inspect", json!({})) else { return };
+    let Some(ext) = drawing["extents"].as_array().filter(|e| e.len() == 2) else { return };
+    let (a, b) = (&ext[0], &ext[1]);
+    let span = [(b[0].as_f64(), a[0].as_f64()), (b[1].as_f64(), a[1].as_f64())]
+        .iter()
+        .filter_map(|(hi, lo)| Some(hi.as_ref()? - lo.as_ref()?))
+        .fold(0.0_f64, f64::max);
+    let Some(scale) = dim_scale_for(span) else { return };
+    let current = call(app, ctx, "engine.execute", json!({"command": "dimstyle.list", "params": {}}))
+        .ok()
+        .and_then(|v| v["current"].as_str().map(str::to_string))
+        .unwrap_or_else(|| "Standard".into());
+    let Ok(style) = call(app, ctx, "engine.execute", json!({"command": "dimstyle.list", "params": {"name": current}})) else { return };
+    if style["style"]["scale"].as_f64().is_some_and(|s| (s - 1.0).abs() < f64::EPSILON) {
+        let _ = call(app, ctx, "engine.execute", json!({"command": "dimstyle", "params": {"name": current, "DIMSCALE": scale}}));
     }
 }
 
@@ -128,6 +174,11 @@ pub fn tick(app: &mut CadApp, ctx: &egui::Context) {
     let document = file["path"].as_str().or(file["name"].as_str()).unwrap_or("").to_string();
     chat.bind(&zenda_theo::chat_dir(), "main", &document);
     chat.pump(&mut CadHost { app, ctx: ctx.clone() });
+    // The request ended after drawing: show what Theo drew, wherever it landed.
+    if app.theo_drew && !chat.busy() {
+        app.theo_drew = false;
+        let _ = call(app, ctx, "engine.execute", json!({"command": "zoom.extents", "params": {}}));
+    }
     app.theo_chat = Some(chat);
 }
 
@@ -191,5 +242,35 @@ mod tests {
         assert!(found["commands"].as_array().unwrap().iter().any(|c| c["id"] == "line"), "{found}");
         assert!(host.act(DO, &json!({"command": "qsave"})).is_err());
         assert_eq!(host.confirm(DO, &json!({"command": "ERASE"})).as_deref(), Some("¿Borro lo seleccionado?"));
+    }
+
+    #[test]
+    fn dimensions_get_a_scale_that_reads_in_a_big_drawing() {
+        assert_eq!(dim_scale_for(4000.0), Some(200.0));
+        assert_eq!(dim_scale_for(120.0), None, "a drawing in inches or a small part keeps the style as it is");
+        assert!(is_dimension("dimlinear") && is_dimension("DIMALIGNED") && !is_dimension("dimstyle"));
+        assert!(is_view("zoom.extents") && !is_view("line"));
+    }
+
+    #[test]
+    fn theo_scales_the_dimension_style_once_and_zooms_when_he_is_done() {
+        let mut app = CadApp::new(cadcraft_engine::Session::new(), crate::Services::default());
+        let ctx = egui::Context::default();
+        let mut host = CadHost { app: &mut app, ctx: ctx.clone() };
+        host.act(DO, &json!({"command": "line", "params": {"points": [[0, 0], [4000, 0], [4000, 3000]]}})).unwrap();
+        host.act(DO, &json!({"command": "dimlinear", "params": {"p1": [0, 0], "p2": [4000, 0], "at": [2000, -400]}})).unwrap();
+        let scale = |app: &mut CadApp| {
+            call(app, &ctx, "engine.execute", json!({"command": "dimstyle.list", "params": {"name": "Standard"}})).unwrap()["style"]["scale"].as_f64()
+        };
+        assert_eq!(scale(&mut app), Some(200.0));
+        // A style the person set is theirs: a second dimension leaves it.
+        call(&mut app, &ctx, "engine.execute", json!({"command": "dimstyle", "params": {"name": "Standard", "DIMSCALE": 50}})).unwrap();
+        let mut host = CadHost { app: &mut app, ctx: ctx.clone() };
+        host.act(DO, &json!({"command": "dimlinear", "params": {"p1": [4000, 0], "p2": [4000, 3000], "at": [4400, 1500]}})).unwrap();
+        assert_eq!(scale(&mut app), Some(50.0));
+        assert!(app.theo_drew);
+        call(&mut app, &ctx, "zenda.chat.key", json!({"llave": "zck_a", "venceEn": 3600})).unwrap();
+        tick(&mut app, &ctx);
+        assert!(!app.theo_drew, "once the request is over, CAD zooms to what Theo drew");
     }
 }
