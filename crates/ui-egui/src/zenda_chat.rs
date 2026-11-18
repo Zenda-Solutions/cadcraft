@@ -120,6 +120,14 @@ impl Host for CadHost<'_> {
     fn target(&mut self, _name: &str, _args: &Value) -> Option<egui::Rect> {
         None
     }
+
+    fn suggestions(&self) -> Vec<String> {
+        vec![
+            "Dibujame un rectángulo de 4 x 3 m y acotalo".into(),
+            "Creá las capas Muros y Aberturas".into(),
+            "¿Cómo hago muros dobles con OFFSET?".into(),
+        ]
+    }
 }
 
 /// A command that places a dimension (not one that edits dimension styles).
