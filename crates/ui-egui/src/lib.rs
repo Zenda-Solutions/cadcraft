@@ -283,6 +283,9 @@ pub struct CadApp {
     /// Theo's chat inside CAD: `None` until Work sends a chat key (its flag is on).
     #[cfg(feature = "zenda")]
     pub theo_chat: Option<zenda_theo::panel::Chat>,
+    /// Theo changed the drawing in the request that is running: when it ends, CAD zooms to show it.
+    #[cfg(feature = "zenda")]
+    pub theo_drew: bool,
     pub system_languages: Vec<String>,
     /// Whether the operating system shows animations, as the host reads it; `None` when the OS
     /// states nothing or the host cannot ask ([`animation`]).
@@ -387,6 +390,8 @@ impl CadApp {
             zenda: zenda::Outbox::default(),
             #[cfg(feature = "zenda")]
             theo_chat: None,
+            #[cfg(feature = "zenda")]
+            theo_drew: false,
             system_languages: Vec::new(),
             system_animations: None,
             system_cursor_default: false,

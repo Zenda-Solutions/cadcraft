@@ -56,6 +56,8 @@ pub fn share_params(app: &crate::CadApp) -> Value {
 
 /// Work's mascot and orange brand button, shared by the curated app patches.
 pub fn theo_button(ui: &mut egui::Ui, label: &str, hint: &str) -> egui::Response {
+    // A stable, name-based id: the texture is found again on every frame. `Id::unique` would not be.
+    #[allow(deprecated)]
     let key = egui::Id::new("zenda.theo.texture");
     let texture = ui.ctx().data_mut(|d| d.get_temp::<egui::TextureHandle>(key)).or_else(|| {
         let image = image::load_from_memory(include_bytes!("../../../assets/zenda/theo-icon-64.png")).ok()?.to_rgba8();
